@@ -1,0 +1,149 @@
+/* HOME PAGE STYLES */
+
+.home-container {
+    width: 100%;
+    min-height: 80vh;
+    background: #faf7f2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Remove global padding for full-width hero */
+    padding: 0 0 40px 0;
+    box-sizing: border-box;
+}
+
+/* HERO SECTION */
+.hero-section {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 2.5rem;
+    /* Ensure hero isn't too tall on mobile, maybe strictly controlled height 
+     or aspect ratio. For now, height auto or fixed is okay but standardizing 
+     container helps. */
+    height: 60vh;
+    min-height: 380px;
+    max-height: 600px;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    /* Adding a subtle animation for life */
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0.8;
+        transform: scale(1.02);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.hero-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(35, 24, 12, 0.85), transparent);
+    color: #fff;
+    /* White text usually pops better over images than gold */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 40px 20px 20px;
+    text-align: center;
+}
+
+.hero-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 0;
+    color: #e0b97d;
+    /* Gold accent */
+}
+
+
+/* INTRODUCTION SECTION */
+.introduction-section {
+    width: 100%;
+    max-width: 800px;
+    /* Constrain width for readability */
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.intro-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    font-size: 2.5rem;
+    color: #23180c;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+    line-height: 1.2;
+}
+
+.intro-text {
+    font-size: 1.1rem;
+    color: #6d4c2b;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+    max-width: 600px;
+}
+
+/* EXPLORE BUTTON */
+.explore-btn {
+    background: #23180c;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 14px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(35, 24, 12, 0.2);
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.explore-btn:hover {
+    background: #b48a5a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(180, 138, 90, 0.3);
+}
+
+.explore-btn:active {
+    transform: translateY(0);
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 600px) {
+    .hero-section {
+        height: 50vh;
+        min-height: 300px;
+    }
+
+    .intro-title {
+        font-size: 2rem;
+    }
+
+    .hero-text {
+        font-size: 1.4rem;
+    }
+}

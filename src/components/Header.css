@@ -1,0 +1,117 @@
+/* HEADER */
+.main-header {
+  background: #fff;
+  color: #2d1c0b;
+  box-shadow: 0 2px 12px rgba(44, 32, 18, 0.04);
+}
+
+/* TOPBAR */
+.topbar {
+  border-bottom: 1px solid #f0e6d2;
+}
+
+.topbar-inner {
+  padding: 0.6rem 0.4rem;
+  display: flex;
+  align-items: center;
+}
+
+/* COLUMNS */
+.topbar-col {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.topbar-col.left {
+  flex: 1;
+}
+
+.topbar-col.center {
+  flex: 1;
+  justify-content: center;
+}
+
+.topbar-col.right {
+  flex: 1;
+  justify-content: flex-end;
+}
+
+/* LOGO */
+.logo-text {
+  font-family: "Playfair Display", serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #6d4c2b;
+  white-space: nowrap;
+}
+
+/* CONTACT */
+.contact-info {
+  font-size: 0.95rem;
+  color: #6d4c2b;
+  opacity: 0.85;
+  white-space: nowrap;
+}
+
+/* BUTTON */
+.order-btn {
+  background: #fff;
+  color: #6d4c2b;
+  border: 1px solid #e0b97d;
+  border-radius: 6px;
+  padding: 0.45rem 1.1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.order-btn:hover {
+  background: #e0b97d;
+  color: #fff;
+}
+
+/* NAV */
+.main-nav {
+  background: #2d1c0b;
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 0.9rem 1rem;
+}
+
+.main-nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 2px;
+  font-size: 0.95rem;
+  padding: 0.3rem 0.6rem;
+}
+
+.main-nav a:hover {
+  color: #e0b97d;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .topbar-inner {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .topbar-col.left,
+  .topbar-col.right {
+    display: none;
+  }
+
+  .logo-text {
+    font-size: 1.3rem;
+  }
+
+  .main-nav {
+    display: none;
+  }
+}
