@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import siteConfig from "../config/siteConfig";
 import "../components/contact.css";
-import { submitOrder } from "../services/api";
+import { onlineWebsiteApi } from "../services/api";
 
 const Contact = () => {
   const [form, setForm] = useState({
@@ -22,10 +22,9 @@ const Contact = () => {
     setStatus("sending");
 
     try {
-      const response = await submitOrder({
-        type: 'contact_form',
-        ...form
-      });
+      // If email is empty, pass null to API
+      const payload = { ...form, email: form.email.trim() === "" ? null : form.email };
+      const response = await onlineWebsiteApi.submitContact(payload);
 
       if (response.success) {
         setStatus("sent");
@@ -145,8 +144,7 @@ const Contact = () => {
             <input
               type="email"
               name="email"
-              placeholder="Your email*"
-              required
+              placeholder="Your email"
               value={form.email}
               onChange={handleChange}
             />
@@ -166,6 +164,7 @@ const Contact = () => {
             required
             value={form.message}
             onChange={handleChange}
+            style={{ color: 'black' }}
           />
 
           <button type="submit" disabled={isSubmitting}>

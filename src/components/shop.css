@@ -1,3 +1,29 @@
+/* Force black text for modal product name and price */
+.modal-black-text {
+  color: #23180c !important;
+  -webkit-text-fill-color: #23180c !important;
+}
+/* Force product name and price to black in product card and modal */
+.product-card-title,
+.product-card-price,
+.dialog-title,
+.dialog-new-price,
+.dialog-old-price {
+  color: #23180c !important;
+}
+/* Make filter headers, product name, and price black */
+.mobile-filter-content h4,
+.filter-box h4,
+.dialog-title,
+.dialog-new-price,
+.dialog-old-price {
+  color: #23180c !important;
+}
+/* Ensure filter modal and sidebar price text is black */
+.mobile-filter-content p,
+.filter-box p {
+  color: #23180c;
+}
 @media (max-width: 900px) {
   .mobile-filter-btn {
     display: flex;
@@ -891,4 +917,14 @@
 
 .cancel-btn:hover {
   background: #f9f9f9;
+}
+
+/* 🔥 HARD OVERRIDE FOR PRODUCT CARD + MODAL TEXT */
+.product-title,
+.price-box span,
+.dialog-title,
+.dialog-old-price,
+.dialog-new-price {
+  color: #23180c !important;
+  -webkit-text-fill-color: #23180c !important;
 }

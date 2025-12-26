@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
-import { submitOrder } from "../services/api";
+import { onlineWebsiteApi } from "../services/api";
+import siteConfig from "../config/siteConfig";
 
 const Cart = () => {
     const { cartItems, removeFromCart, getCartTotal, clearCart } = useCart();
@@ -12,7 +13,7 @@ const Cart = () => {
     if (!cartItems || cartItems.length === 0) {
         return (
             <div style={{ padding: "40px", textAlign: "center" }}>
-                <h2>Your Cart is Empty</h2>
+                <h2 className="modal-black-text" style={{ marginBottom: "20px" }}>Your Cart is Empty</h2>
                 <Link to="/shop" style={{ textDecoration: "underline", color: "#b48a5a" }}>
                     Go to Shop
                 </Link>
@@ -40,14 +41,17 @@ const Cart = () => {
         }
 
         setIsSubmitting(true);
+
         const orderData = {
-            customer: formData,
+            customer_name: formData.name,
+            customer_phone: formData.phone,
+            customer_email: null, // or add email field later
             items: cartItems,
             total: getCartTotal(),
         };
 
         try {
-            const response = await submitOrder(orderData);
+            const response = await onlineWebsiteApi.submitOrder(orderData);
             if (response.success) {
                 alert("Order placed successfully! Our assistant will reach you out.");
                 clearCart();
@@ -60,6 +64,7 @@ const Cart = () => {
             setIsSubmitting(false);
         }
     };
+
 
     const handleWhatsAppOrder = () => {
         if (!formData.name || !formData.phone) {
@@ -76,7 +81,14 @@ const Cart = () => {
 
         // 2. Encode
         const encodedMessage = encodeURIComponent(message);
-        const phoneNumber = "919999999999"; // Placeholder number
+        // Use WhatsApp number from siteConfig, ensure country code
+        let phoneNumber = siteConfig.whatsapp;
+        if (phoneNumber.startsWith('+')) {
+            phoneNumber = phoneNumber.replace('+', '');
+        }
+        if (!phoneNumber.startsWith('91')) {
+            phoneNumber = '91' + phoneNumber;
+        }
 
         // 3. Open URL
         window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, "_blank");
@@ -84,27 +96,33 @@ const Cart = () => {
 
     return (
         <div className="cart-container" style={{ maxWidth: "800px", margin: "40px auto", padding: "0 20px" }}>
-            <h2 style={{ marginBottom: "20px" }}>Your Cart</h2>
+            <h2 className="modal-black-text" style={{ marginBottom: "20px" }}>Your Cart</h2>
 
             <div className="cart-items">
                 {cartItems.map((item) => (
-                    <div key={item.id} style={{ display: "flex", gap: "20px", marginBottom: "20px", borderBottom: "1px solid #eee", paddingBottom: "20px" }}>
+                    <div key={item.id} style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '20px', borderBottom: '1px solid #eee', paddingBottom: '20px', borderRadius: '10px' }}>
                         <img
                             src={item.images && item.images[0]}
                             alt={item.name}
-                            style={{ width: "80px", height: "80px", objectFit: "cover", borderRadius: "8px" }}
+                            style={{ width: "80px", height: "80px", objectFit: "cover", borderRadius: "8px", flexShrink: 0 }}
                         />
-                        <div style={{ flex: 1 }}>
-                            <h4 style={{ margin: "0 0 5px 0" }}>{item.name}</h4>
-                            <p style={{ margin: "0" }}>Qty: {item.quantity}</p>
-                            <p style={{ margin: "5px 0", fontWeight: "bold" }}>₹{item.price * item.quantity}</p>
+                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                            <h4 className="modal-black-text cart-product-name" style={{ margin: 0 }}>{item.name}</h4>
+                            <p className="modal-black-text cart-product-qty" style={{ margin: 0 }}>Qty: {item.quantity}</p>
+                            <p className="modal-black-text cart-product-price" style={{ margin: '5px 0', fontWeight: 'bold' }}>₹{item.price * item.quantity}</p>
                         </div>
                         <button
-                            onClick={() => removeFromCart(item.id)}
-                            style={{ background: "none", border: "none", color: "red", cursor: "pointer", height: "fit-content" }}
-                        >
-                            Remove
-                        </button>
+                                                        onClick={() => removeFromCart(item.id)}
+                                                        style={{ background: "none", border: "none", color: "#b48a5a", cursor: "pointer", height: "fit-content", padding: 0, fontSize: '22px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                                        aria-label="Remove from cart"
+                                                >
+                                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M6 19a2 2 0 002 2h8a2 2 0 002-2V7H6v12zM19 7V5a2 2 0 00-2-2H7a2 2 0 00-2 2v2" stroke="#b48a5a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                            <line x1="9" y1="10" x2="9" y2="17" stroke="#b48a5a" strokeWidth="2" strokeLinecap="round"/>
+                                                            <line x1="12" y1="10" x2="12" y2="17" stroke="#b48a5a" strokeWidth="2" strokeLinecap="round"/>
+                                                            <line x1="15" y1="10" x2="15" y2="17" stroke="#b48a5a" strokeWidth="2" strokeLinecap="round"/>
+                                                        </svg>
+                                                </button>
                     </div>
                 ))}
             </div>
@@ -112,7 +130,7 @@ const Cart = () => {
             <div className="cart-summary" style={{ marginTop: "30px", padding: "20px", background: "#fff", borderRadius: "8px", boxShadow: "0 2px 8px rgba(0,0,0,0.05)" }}>
                 <h3 style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
                     <span>Total:</span>
-                    <span>₹{getCartTotal().toLocaleString()}</span>
+                    <span className="modal-black-text">₹{getCartTotal().toLocaleString()}</span>
                 </h3>
 
                 <div style={{ display: "flex", gap: "10px" }}>

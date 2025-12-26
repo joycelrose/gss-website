@@ -209,7 +209,7 @@ const Shop = () => {
 
       {/* ---------------- PRODUCT DETAILS MODAL ---------------- */}
       {selectedProduct && (
-        <>
+  <React.Fragment>
           {/* FULL SCREEN ZOOM OVERLAY */}
           {isFullScreen && (
             <div className="fullscreen-overlay" onClick={toggleFullScreen}>
@@ -252,7 +252,8 @@ const Shop = () => {
             <div className="product-dialog" onClick={(e) => e.stopPropagation()}>
               <button className="dialog-close-btn" onClick={closeProductModal}>×</button>
               <div className="dialog-content">
-                <div className="dialog-carousel">
+                <div style={{color: '#23180c !important', background: 'white', WebkitTextFillColor: '#23180c', borderRadius: '8px', boxShadow: '0 2px 16px rgba(0,0,0,0.08)', padding: '16px 0'}}>
+                  <div className="dialog-carousel">
                   {selectedProduct.images && selectedProduct.images.length > 1 && (
                     <button className="carousel-btn prev" onClick={prevImage}>&#10094;</button>
                   )}
@@ -269,12 +270,18 @@ const Shop = () => {
                     <button className="carousel-btn next" onClick={nextImage}>&#10095;</button>
                   )}
                 </div>
-                <h3 className="dialog-title">{selectedProduct.name}</h3>
+                <div style={{background: 'white', color: '#23180c', padding: '2px 0', borderRadius: '2px', width: 'fit-content', margin: '0 auto'}}>
+                  <h3 className="dialog-title product-card-title modal-black-text">{selectedProduct.name}</h3>
+                </div>
                 <div className="dialog-price-box">
                   {selectedProduct.originalPrice && (
-                    <span className="dialog-old-price">₹{selectedProduct.originalPrice.toLocaleString()}</span>
+                    <span className="dialog-old-price product-card-price modal-black-text">
+                      ₹{selectedProduct.originalPrice.toLocaleString()}
+                    </span>
                   )}
-                  <span className="dialog-new-price">₹{selectedProduct.price.toLocaleString()}</span>
+                  <span className="dialog-new-price product-card-price modal-black-text">
+                    ₹{selectedProduct.price.toLocaleString()}
+                  </span>
                 </div>
                 <p className="dialog-description">{selectedProduct.description || "No description available."}</p>
 
@@ -295,7 +302,8 @@ const Shop = () => {
               </div>
             </div>
           </div>
-        </>
+        </div>
+  </React.Fragment>
       )}
 
       {/* ---------------- LEFT SIDEBAR (DESKTOP ONLY) ---------------- */}
