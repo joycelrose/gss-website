@@ -39,6 +39,15 @@ const Contact = () => {
     }
   };
 
+  // Normalize WhatsApp number for wa.me link
+  let whatsappNumber = siteConfig.whatsapp;
+  if (whatsappNumber.startsWith('+')) {
+    whatsappNumber = whatsappNumber.replace('+', '');
+  }
+  if (!whatsappNumber.startsWith('91')) {
+    whatsappNumber = '91' + whatsappNumber;
+  }
+
   return (
     <main className="contact-page">
       {/* TOP SECTION */}
@@ -90,31 +99,53 @@ const Contact = () => {
             </span>
             <div className="contact-numbers">
               {siteConfig.contacts.map((c, i) => {
-                const isWhatsApp = c.label === "WhatsApp";
-                return isWhatsApp ? (
-                  <a
-                    key={i}
-                    href={`https://wa.me/${siteConfig.whatsapp}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="contact-link"
-                    style={{ display: 'flex', alignItems: 'center', gap: 8 }}
-                  >
-                    <svg width="20" height="20" viewBox="0 0 32 32" fill="none" style={{ verticalAlign: 'middle' }}>
-                      <circle cx="16" cy="16" r="16" fill="#25D366" />
-                      <path d="M23.5 20.5c-.3-.2-1.7-.8-2-1s-.5-.2-.7.1c-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.2-.4-2.3-1.3-.8-.7-1.4-1.5-1.6-1.8-.2-.3 0-.5.1-.7.1-.1.2-.3.3-.5.1-.2.1-.4 0-.6-.1-.2-.7-1.7-1-2.3-.2-.5-.5-.4-.7-.4h-.6c-.2 0-.5.1-.7.3-.2.2-.7.7-.7 1.7 0 1 .7 2 1.1 2.5.5.6 2.1 2.5 5.1 3.3.7.2 1.2.3 1.6.2.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2z" fill="#fff" />
-                    </svg>
-                    {c.number}
-                  </a>
-                ) : (
-                  <a
-                    key={i}
-                    href={`tel:${c.number.replace(/\s+/g, "")}`}
-                    className="contact-link"
-                  >
-                    {c.number}
-                  </a>
-                );
+                if (c.label === "WhatsApp") {
+                  return (
+                    <a
+                      key={i}
+                      href={`https://wa.me/${whatsappNumber}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="contact-link"
+                      style={{ display: 'flex', alignItems: 'center', gap: 8 }}
+                    >
+                      <svg width="20" height="20" viewBox="0 0 32 32" fill="none" style={{ verticalAlign: 'middle' }}>
+                        <circle cx="16" cy="16" r="16" fill="#25D366" />
+                        <path d="M23.5 20.5c-.3-.2-1.7-.8-2-1s-.5-.2-.7.1c-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.2-.4-2.3-1.3-.8-.7-1.4-1.5-1.6-1.8-.2-.3 0-.5.1-.7.1-.1.2-.3.3-.5.1-.2.1-.4 0-.6-.1-.2-.7-1.7-1-2.3-.2-.5-.5-.4-.7-.4h-.6c-.2 0-.5.1-.7.3-.2.2-.7.7-.7 1.7 0 1 .7 2 1.1 2.5.5.6 2.1 2.5 5.1 3.3.7.2 1.2.3 1.6.2.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2z" fill="#fff" />
+                      </svg>
+                      {c.number}
+                    </a>
+                  );
+                } else if (c.label === "Facebook") {
+                  return (
+                    <a
+                      key={i}
+                      href={c.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="contact-link"
+                      style={{ display: 'flex', alignItems: 'center', gap: 8 }}
+                    >
+                      <svg width="20" height="20" viewBox="0 0 32 32" fill="none" style={{ verticalAlign: 'middle' }}>
+                        <circle cx="16" cy="16" r="16" fill="#1877F3" />
+                        <path d="M20.5 16.5H18V25h-3v-8.5h-1.5V14H15v-1.5c0-1.4.8-3.5 3.5-3.5h2V12h-2c-.3 0-.5.2-.5.5V14h2.5l-.5 2.5z" fill="#fff" />
+                      </svg>
+                      Facebook
+                    </a>
+                  );
+                } else if (c.number) {
+                  return (
+                    <a
+                      key={i}
+                      href={`tel:${c.number.replace(/\s+/g, "")}`}
+                      className="contact-link"
+                    >
+                      {c.number}
+                    </a>
+                  );
+                } else {
+                  return null;
+                }
               })}
             </div>
           </div>

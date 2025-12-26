@@ -7,9 +7,11 @@ const siteConfig = {
   openingHours: '10:00 AM - 9:00 PM',
   openingDays: 'Wednesday - Monday',
   contacts: [
-    { label: 'Main', number: '+91 89668 56220' },
-    { label: 'WhatsApp', number: '+91 93015 88198' }
+    { label: 'Main', number: '+91 8966856220' },
+    { label: 'WhatsApp', number: '+91 9301588198' },
+    { label: 'Facebook', url: 'https://www.facebook.com/people/Garg-Sarees/pfbid028iU3QbJeoptq1r4KGeWGARo6f6bTww7YNepa4wPy4YG5WusepnSAwDcTxYMieJK1l/' }
   ],
+  facebookPage: 'https://www.facebook.com/people/Garg-Sarees/pfbid028iU3QbJeoptq1r4KGeWGARo6f6bTww7YNepa4wPy4YG5WusepnSAwDcTxYMieJK1l/',
   whatsapp: '9301588198',
   address: 'Above Vivek Hotel, Topi Bazaar, Lashkar, Gwalior, MP, 474001',
   upiId: 'Q340133974@ybl',
